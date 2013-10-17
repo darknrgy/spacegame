@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class CarDriver : MonoBehaviour {
 	
 	public DebugOutput debugOutput;
 	public float thrustPower = 100.0f;
+	public float thrustAcceleration = 0.1f;
+	public float maxDownThrustHover = 3.0f;
+	public float hoverThrust = 5.0f;
 	public float mouseSensivityX = 1.0f;
 	public float mouseSensivityY = 1.0f;
 	
@@ -12,6 +16,12 @@ public class CarDriver : MonoBehaviour {
 	public Component mainCamera;
 	
 	protected bool hoverMode = true;
+	protected float xAcceleration = 0;
+	protected float yAcceleration = 0;
+	protected float zAcceleration = 0;
+	
+	
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -49,59 +59,67 @@ public class CarDriver : MonoBehaviour {
 	
 	void FixedUpdate(){
 		
-		debugOutput.queue("Camera rotation: " + mainCamera.transform.localEulerAngles.ToString());
+		if (hoverMode) debugOutput.queue("HOVER MODE");
 		
-		Vector3 cg = new Vector3(0, -5, 0);
-		
-		
+		// forward and reverse
+		bool zInput = false;
 		if (Input.GetKey(KeyCode.Space)){
-			rigidbody.AddRelativeForce(0, 0, thrustPower);
-			debugOutput.queue ("thrusting forward");
+			zAcceleration += thrustAcceleration;
+			if (zAcceleration > thrustPower) zAcceleration = thrustPower;
+			zInput = true;
 		}
-		
 		if (Input.GetKey(KeyCode.LeftAlt)){
-			rigidbody.AddRelativeForce(0, 0, -thrustPower);
+			zAcceleration -= thrustAcceleration;
+			if (zAcceleration < -thrustPower) zAcceleration = -thrustPower;
+			zInput = true;
 		}
-		
-		if (Input.GetKey(KeyCode.W)){
-			rigidbody.AddRelativeForce(0, thrustPower, 0);
+		if (!zInput){
+			if (Math.Abs(zAcceleration) < thrustAcceleration) zAcceleration = 0;
+			zAcceleration += (zAcceleration < 0) ? thrustAcceleration : -thrustAcceleration;
 		}
-		
-		if (Input.GetKey(KeyCode.S)){
-			rigidbody.AddRelativeForce(0, -thrustPower, 0);
-		}
+		rigidbody.AddRelativeForce(0, 0, zAcceleration);
 		
 		
-		float yThrust = 0.0f;
-		if (Input.GetKey(KeyCode.W)) yThrust = thrustPower;
 		
-		
-		if (hoverMode){
-			yThrust = 5.0f;
-			
-			if (Input.GetKey(KeyCode.S)) yThrust = 3.0f;
-			debugOutput.queue("HOVER MODE");
-		}else{
-			if (Input.GetKey(KeyCode.S)) yThrust = -thrustPower;
-		}
-		
-		rigidbody.AddRelativeForce(0, yThrust, 0);
-		
-		if (Input.GetKey(KeyCode.A)){
-			rigidbody.AddRelativeForce(-thrustPower, 0, 0);
-		}
-		
+		// left and right
+		bool xInput = false;
 		if (Input.GetKey(KeyCode.D)){
-			rigidbody.AddRelativeForce(thrustPower, 0, 0);
+			xAcceleration += thrustAcceleration;
+			if (xAcceleration >  thrustPower) xAcceleration = thrustPower;
+			xInput = true;
+		}
+		if (Input.GetKey(KeyCode.A)){
+			xAcceleration -= thrustAcceleration;
+			if (xAcceleration <  -thrustPower) xAcceleration = -thrustPower;
+			xInput = true;
+		}
+		if (!xInput){
+			if (Math.Abs(xAcceleration) < thrustAcceleration) xAcceleration = 0;
+			xAcceleration += (xAcceleration < 0) ? thrustAcceleration : -thrustAcceleration;
+		}
+		rigidbody.AddRelativeForce(xAcceleration, 0, 0);
+			
+		
+		// up and down
+		bool yInput = false;
+		float maxDownThrust = hoverMode ? maxDownThrustHover : -thrustPower;
+		float yThrustCenter = hoverMode ? hoverThrust : 0;
+		if (Input.GetKey(KeyCode.W)){
+			yAcceleration += thrustAcceleration;
+			if (yAcceleration >  thrustPower) yAcceleration = thrustPower;
+			yInput = true;
+		}
+		if (Input.GetKey(KeyCode.S)){
+			yAcceleration -= thrustAcceleration;
+			if (yAcceleration <  maxDownThrust) yAcceleration = maxDownThrust;
+			yInput = true;
 		}
 		
-		//rigidbody.angularVelocity.magnitude = 0;
-		
-		
-		
-		
-		
-		
+		if (!yInput){
+			if (Math.Abs(yAcceleration - yThrustCenter) < thrustAcceleration) yAcceleration = yThrustCenter;
+			yAcceleration += (yAcceleration < yThrustCenter) ? thrustAcceleration : -thrustAcceleration;
+		}
+		rigidbody.AddRelativeForce(0, yAcceleration, 0);
 		
 	}
 }
