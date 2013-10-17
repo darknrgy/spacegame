@@ -59,7 +59,8 @@
      <Compile Include="Assets\OVR\Scripts\OVRMainMenu.cs" />
      <Compile Include="Assets\OVR\Scripts\OVRPlayerController.cs" />
      <Compile Include="Assets\OVR\Scripts\OVRPresetManager.cs" />
-     <Compile Include="Assets\PointsOnSphere.cs" />
+     <Compile Include="Assets\ProceduralTerrain\PointsOnSphere.cs" />
+     <Compile Include="Assets\ProceduralTerrain\ProceduralTerrain.cs" />
      <None Include="Assets\Plugins\MITLicense_XInputDotNetPureDLL.txt" />
      <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection_CA_old.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
