@@ -142,7 +142,6 @@ public class ProceduralTerrain : MonoBehaviour {
 	}
 	
 	void addAndHashVector(Vector3 vector){
-		Random rand = new Random();
 		MD5 md5 = MD5.Create();
 		List<Int32> points;
 		newVertices[index] = clone (vector);

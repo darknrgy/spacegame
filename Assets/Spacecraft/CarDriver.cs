@@ -12,6 +12,8 @@ public class CarDriver : MonoBehaviour {
 	public float mouseSensivityX = 1.0f;
 	public float mouseSensivityY = 1.0f;
 	
+	public GameObject cockpitModule;
+	
 	//public Component fpvCamera;
 	public Component mainCamera;
 	
@@ -19,6 +21,7 @@ public class CarDriver : MonoBehaviour {
 	protected float xAcceleration = 0;
 	protected float yAcceleration = 0;
 	protected float zAcceleration = 0;
+	protected float cockpitRotation;
 	
 	
 	
@@ -46,7 +49,20 @@ public class CarDriver : MonoBehaviour {
 		
 		
 		
+		// fucking works!!!
+		cockpitRotation += Input.GetAxis("Mouse X") * mouseSensivityX;
 		
+		//cockpitModule.transform.localEulerAngles = new Vector3(cockpitModule.transform.rotation.x, cockpitRotation, cockpitModule.transform.rotation.x);
+		
+		
+		//float cockpitRotation = 90;
+		
+		
+		cockpitModule.transform.localEulerAngles = new Vector3(cockpitModule.transform.rotation.x, -cockpitRotation, cockpitModule.transform.rotation.x);
+		
+		//cockpitModule.transform.rotation.y = cockpitRotation;
+		
+		//cockpitModule.transform.rotation.y = cockpitRotation;
 		
 		
 		
@@ -60,6 +76,8 @@ public class CarDriver : MonoBehaviour {
 	void FixedUpdate(){
 		
 		if (hoverMode) debugOutput.queue("HOVER MODE");
+		
+		debugOutput.queue("Camera Y Rotation: " + cockpitRotation);
 		
 		// forward and reverse
 		bool zInput = false;
