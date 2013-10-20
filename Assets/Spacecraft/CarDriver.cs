@@ -22,11 +22,8 @@ public class CarDriver : MonoBehaviour {
 	protected float yAcceleration = 0;
 	protected float zAcceleration = 0;
 	protected float cockpitRotation;
+	protected float xMouseAccumulator = 0;
 	
-	
-	
-	
-	// Use this for initialization
 	void Start () {
 	
 	}
@@ -34,39 +31,13 @@ public class CarDriver : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+		xMouseAccumulator *= 0.75f;
+		xMouseAccumulator += Input.GetAxis("Mouse X") * mouseSensivityX;
 		
-			
-		//transform.Rotate(Input.GetAxis("Mouse Y") * -mouseSensivityX, 0, 0);
-		//fpvCamera.transform.Rotate(0, Input.GetAxis("Mouse X") * mouseSensivityX, 0);
-		
-		/* working mouse rotation logic */
 		transform.Rotate(0, Input.GetAxis("Mouse X") * mouseSensivityX, 0);
-		//transform.Rotate (0, 0, +Input.GetAxis("Mouse Y") * mouseSensivityY);
-	
+		
 		
 		mainCamera.transform.Rotate(-Input.GetAxis("Mouse Y") * mouseSensivityX, 0,  0);
-		//fpvCamera.camera.transform.Rotate(0, Input.GetAxis("Mouse X") * mouseSensivityX, 0);
-		
-		
-		
-		// fucking works!!!
-		cockpitRotation += Input.GetAxis("Mouse X") * mouseSensivityX;
-		
-		//cockpitModule.transform.localEulerAngles = new Vector3(cockpitModule.transform.rotation.x, cockpitRotation, cockpitModule.transform.rotation.x);
-		
-		
-		//float cockpitRotation = 90;
-		
-		
-		cockpitModule.transform.localEulerAngles = new Vector3(cockpitModule.transform.rotation.x, -cockpitRotation, cockpitModule.transform.rotation.x);
-		
-		//cockpitModule.transform.rotation.y = cockpitRotation;
-		
-		//cockpitModule.transform.rotation.y = cockpitRotation;
-		
-		
-		
-        //}
 		
 		if (Input.GetKeyUp(KeyCode.R)){
 			hoverMode = !hoverMode;
@@ -74,6 +45,11 @@ public class CarDriver : MonoBehaviour {
 	}
 	
 	void FixedUpdate(){
+		
+		cockpitModule.transform.localEulerAngles = new Vector3(
+			0, 
+			-xMouseAccumulator, 
+			0);
 		
 		if (hoverMode) debugOutput.queue("HOVER MODE");
 		
