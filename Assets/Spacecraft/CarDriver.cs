@@ -12,6 +12,7 @@ public class CarDriver : MonoBehaviour {
 	public float mouseSensivityX = 1.0f;
 	public float mouseSensivityY = 1.0f;
 	public TextMesh velocityHUD;
+	public TextMesh verticalVelocityHUD;
 	public TextMesh altitudeHUD;
 	
 	
@@ -26,6 +27,8 @@ public class CarDriver : MonoBehaviour {
 	protected float zAcceleration = 0;
 	protected float cockpitRotation;
 	protected float xMouseAccumulator = 0;
+	protected float lastVPosition = 0;
+	protected float vVelocity = 0;
 	
 	void Start () {
 		if (hoverMode) yAcceleration = hoverThrust;
@@ -34,6 +37,10 @@ public class CarDriver : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		float vPosition = rigidbody.position.magnitude;
+		vVelocity = vVelocity * 0.75f + (vPosition - lastVPosition) * (1/ Time.deltaTime) * 0.25f;
+		lastVPosition = vPosition;
 		
 		xMouseAccumulator *= 0.85f;
 		xMouseAccumulator += Input.GetAxis("Mouse X") * mouseSensivityX;
@@ -47,22 +54,23 @@ public class CarDriver : MonoBehaviour {
 			hoverMode = !hoverMode;
 		}
 		
-		velocityHUD.text = (rigidbody.velocity.magnitude * 2).ToString("F0") + "m/s";
-		altitudeHUD.text = (rigidbody.position.magnitude * 2 - 336).ToString("F0") + "m/s";
+		
 		
 		
 	}
 	
 	void FixedUpdate(){
 		
+		velocityHUD.text = "VEL: " + (rigidbody.velocity.magnitude * 2).ToString("F0") + "m/s";
+		verticalVelocityHUD.text = "vVEL: " + (vVelocity * 2).ToString("F0") + "m/s";
+		altitudeHUD.text = "ALT: " + (rigidbody.position.magnitude * 2 - 336).ToString("F0") + "m";
+		
+		
+		
 		cockpitModule.transform.localEulerAngles = new Vector3(
 			0, 
 			-xMouseAccumulator, 
 			0);
-		
-		if (hoverMode) debugOutput.queue("HOVER MODE");
-		
-		debugOutput.queue("Camera Y Rotation: " + cockpitRotation);
 		
 		// forward and reverse
 		bool zInput = false;

@@ -20,8 +20,6 @@ public class Aligner : MonoBehaviour {
 		Vector3 gravity = new Vector3(0,0,0) - rigidbody.position.normalized;
 		gravity *= gravityCoefficient;
 		
-		debugOutput.queue(gravity.ToString());
-				
 		rigidbody.AddForce(gravity);
 		
 	}
