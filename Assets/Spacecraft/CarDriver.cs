@@ -11,6 +11,9 @@ public class CarDriver : MonoBehaviour {
 	public float hoverThrust = 5.0f;
 	public float mouseSensivityX = 1.0f;
 	public float mouseSensivityY = 1.0f;
+	public TextMesh velocityHUD;
+	public TextMesh altitudeHUD;
+	
 	
 	public GameObject cockpitModule;
 	
@@ -25,13 +28,14 @@ public class CarDriver : MonoBehaviour {
 	protected float xMouseAccumulator = 0;
 	
 	void Start () {
-	
+		if (hoverMode) yAcceleration = hoverThrust;
+		rigidbody.centerOfMass = new Vector3(0, 0, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		xMouseAccumulator *= 0.75f;
+		xMouseAccumulator *= 0.85f;
 		xMouseAccumulator += Input.GetAxis("Mouse X") * mouseSensivityX;
 		
 		transform.Rotate(0, Input.GetAxis("Mouse X") * mouseSensivityX, 0);
@@ -42,6 +46,11 @@ public class CarDriver : MonoBehaviour {
 		if (Input.GetKeyUp(KeyCode.R)){
 			hoverMode = !hoverMode;
 		}
+		
+		velocityHUD.text = (rigidbody.velocity.magnitude * 2).ToString("F0") + "m/s";
+		altitudeHUD.text = (rigidbody.position.magnitude * 2 - 336).ToString("F0") + "m/s";
+		
+		
 	}
 	
 	void FixedUpdate(){
@@ -69,11 +78,9 @@ public class CarDriver : MonoBehaviour {
 		}
 		if (!zInput){
 			if (Math.Abs(zAcceleration) < thrustAcceleration) zAcceleration = 0;
-			zAcceleration += (zAcceleration < 0) ? thrustAcceleration : -thrustAcceleration;
+			else zAcceleration += (zAcceleration < 0) ? thrustAcceleration : -thrustAcceleration;
 		}
-		rigidbody.AddRelativeForce(0, 0, zAcceleration);
-		
-		
+		rigidbody.AddRelativeForce(0, 0, zAcceleration);		
 		
 		// left and right
 		bool xInput = false;
@@ -89,7 +96,7 @@ public class CarDriver : MonoBehaviour {
 		}
 		if (!xInput){
 			if (Math.Abs(xAcceleration) < thrustAcceleration) xAcceleration = 0;
-			xAcceleration += (xAcceleration < 0) ? thrustAcceleration : -thrustAcceleration;
+			else xAcceleration += (xAcceleration < 0) ? thrustAcceleration : -thrustAcceleration;
 		}
 		rigidbody.AddRelativeForce(xAcceleration, 0, 0);
 			
@@ -111,7 +118,7 @@ public class CarDriver : MonoBehaviour {
 		
 		if (!yInput){
 			if (Math.Abs(yAcceleration - yThrustCenter) < thrustAcceleration) yAcceleration = yThrustCenter;
-			yAcceleration += (yAcceleration < yThrustCenter) ? thrustAcceleration : -thrustAcceleration;
+			else yAcceleration += (yAcceleration < yThrustCenter) ? thrustAcceleration : -thrustAcceleration;
 		}
 		rigidbody.AddRelativeForce(0, yAcceleration, 0);
 		
