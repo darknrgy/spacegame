@@ -14,6 +14,7 @@ public class CarDriver : MonoBehaviour {
 	public TextMesh velocityHUD;
 	public TextMesh verticalVelocityHUD;
 	public TextMesh altitudeHUD;
+	public TextMesh hoverHUD;
 	
 	
 	public GameObject cockpitModule;
@@ -38,9 +39,7 @@ public class CarDriver : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		float vPosition = rigidbody.position.magnitude;
-		vVelocity = vVelocity * 0.75f + (vPosition - lastVPosition) * (1/ Time.deltaTime) * 0.25f;
-		lastVPosition = vPosition;
+		
 		
 		xMouseAccumulator *= 0.85f;
 		xMouseAccumulator += Input.GetAxis("Mouse X") * mouseSensivityX;
@@ -54,6 +53,12 @@ public class CarDriver : MonoBehaviour {
 			hoverMode = !hoverMode;
 		}
 		
+		velocityHUD.text = "VEL: " + (rigidbody.velocity.magnitude * 2).ToString("F0") + "m/s";
+		verticalVelocityHUD.text = "vVEL: " + (vVelocity * 2).ToString("F0") + "m/s";
+		altitudeHUD.text = "ALT: " + (rigidbody.position.magnitude * 2 - 336).ToString("F0") + "m";
+		hoverHUD.text = hoverMode ? "HOVER" : "ORBIT";
+		hoverHUD.color = hoverMode ? new Color(0, 1.0f, 0, 1.0f) :  new Color(1.0f, 0, 0, 1.0f);
+		
 		
 		
 		
@@ -61,9 +66,11 @@ public class CarDriver : MonoBehaviour {
 	
 	void FixedUpdate(){
 		
-		velocityHUD.text = "VEL: " + (rigidbody.velocity.magnitude * 2).ToString("F0") + "m/s";
-		verticalVelocityHUD.text = "vVEL: " + (vVelocity * 2).ToString("F0") + "m/s";
-		altitudeHUD.text = "ALT: " + (rigidbody.position.magnitude * 2 - 336).ToString("F0") + "m";
+		float vPosition = rigidbody.position.magnitude;
+		vVelocity = (vPosition - lastVPosition) * (1/ Time.deltaTime);
+		lastVPosition = vPosition;
+		
+
 		
 		
 		
