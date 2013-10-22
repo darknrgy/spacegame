@@ -50,9 +50,11 @@
      <Compile Include="Assets\OVR\Editor\OVREditorGUIUtility.cs" />
      <Compile Include="Assets\OVR\Editor\OVRPlayerControllerEditor.cs" />
      <Compile Include="Assets\OVR\Editor\OVRPrefabs.cs" />
+     <None Include="Assets\Hologram Map\Hologoram.shader" />
      <None Include="Assets\Plugins\MITLicense_XInputDotNetPureDLL.txt" />
      <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection_CA_old.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
+     <None Include="Assets\Custom Shaders\Hologoram.shader" />
      <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection_CA.shader" />
      <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection.shader" />
      <None Include="Assets\Plugins\MITLicense_XInputInterfaceDLL.txt" />

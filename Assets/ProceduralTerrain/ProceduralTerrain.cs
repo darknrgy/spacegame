@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Linq;
 using System;
-using UnityEditor;
 using Random = System.Random;
 using System.Security.Cryptography;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ public class ProceduralTerrain : MonoBehaviour {
 			amplitude /= amplitudeDelta;
 		}
 		mesh.Optimize();
-		AssetDatabase.CreateAsset(mesh, "Assets/ProceduralTerrain/Planet01.asset");
+		//AssetDatabase.CreateAsset(mesh, "Assets/ProceduralTerrain/Planet01.asset");
 		
 	}
 	
@@ -236,7 +235,7 @@ public class ProceduralTerrain : MonoBehaviour {
 			vertices[i].z -= center_z;
 		}
 		
-		AssetDatabase.CreateAsset(mesh, "Assets/PerfectIcosahedron.asset");
+		//AssetDatabase.CreateAsset(mesh, "Assets/PerfectIcosahedron.asset");
 		
 		
 	}
