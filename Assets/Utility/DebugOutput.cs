@@ -13,7 +13,7 @@ public class DebugOutput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		flush();		
 	}
 	
 	public void queue(string s){
@@ -25,7 +25,5 @@ public class DebugOutput : MonoBehaviour {
 		queueString = "";
 	}
 	
-	void FixedUpdate(){
-		flush();	
-	}
+	
 }
