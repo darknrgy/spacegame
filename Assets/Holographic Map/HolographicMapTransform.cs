@@ -8,13 +8,13 @@ public class HolographicMapTransform : MonoBehaviour {
 	public GameObject parent;
 	public DebugOutput debug;
 	public GameObject satellite;
+	public GameObject shipTemplate;
 	
 	protected float counter = 0;
 	protected List<GameObject> children = new List<GameObject>();
 	
-	public static void RegisterMapObject(GameObject gameObject){
-		children.Add(gameObject);		
-	}
+	protected static HolographicMapTransform instance;
+	
 	
 	// Use this for initialization
 	void Start () {

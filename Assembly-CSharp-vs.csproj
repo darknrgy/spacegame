@@ -44,32 +44,19 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Hologram Map\HolographicMapTransform.cs" />
-     <Compile Include="Assets\MapChildren.cs" />
-     <Compile Include="Assets\OVR\OVRImageEffects\OVRImageEffectBase.cs" />
-     <Compile Include="Assets\OVR\OVRImageEffects\OVRLensCorrection.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRCamera.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRCameraController.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRComponent.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRCrosshair.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRDevice.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRGamepadController.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRMainMenu.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRPlayerController.cs" />
-     <Compile Include="Assets\OVR\Scripts\OVRPresetManager.cs" />
+     <Compile Include="Assets\Holographic Map\HolographicMapTransform.cs" />
+     <Compile Include="Assets\Holographic Map\MapChild.cs" />
+     <Compile Include="Assets\Holographic Map\MapChildrenList.cs" />
      <Compile Include="Assets\ProceduralTerrain\PointsOnSphere.cs" />
      <Compile Include="Assets\ProceduralTerrain\ProceduralTerrain.cs" />
      <Compile Include="Assets\Spacecraft\Aligner.cs" />
      <Compile Include="Assets\Spacecraft\CarDriver.cs" />
      <Compile Include="Assets\Spacecraft\InitialBehavior.cs" />
      <Compile Include="Assets\Utility\DebugOutput.cs" />
-     <None Include="Assets\Hologram Map\Hologoram.shader" />
+     <None Include="Assets\Holographic Map\Hologoram.shader" />
      <None Include="Assets\Plugins\MITLicense_XInputDotNetPureDLL.txt" />
-     <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection_CA_old.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\Custom Shaders\Hologoram.shader" />
-     <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection_CA.shader" />
-     <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection.shader" />
      <None Include="Assets\Plugins\MITLicense_XInputInterfaceDLL.txt" />
  <Reference Include="XInputDotNetPure">
  <HintPath>Assets\Plugins\XInputDotNetPure.dll</HintPath>

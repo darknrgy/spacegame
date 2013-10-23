@@ -50,7 +50,7 @@
      <Compile Include="Assets\OVR\Editor\OVREditorGUIUtility.cs" />
      <Compile Include="Assets\OVR\Editor\OVRPlayerControllerEditor.cs" />
      <Compile Include="Assets\OVR\Editor\OVRPrefabs.cs" />
-     <None Include="Assets\Hologram Map\Hologoram.shader" />
+     <None Include="Assets\Holographic Map\Hologoram.shader" />
      <None Include="Assets\Plugins\MITLicense_XInputDotNetPureDLL.txt" />
      <None Include="Assets\OVR\OVRImageEffects\OVRLensCorrection_CA_old.shader" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
@@ -79,10 +79,6 @@
  <Reference Include="UnityEditor.Android.Extensions">
  <HintPath>C:\Program Files (x86)\Unity\Editor\Data\PlaybackEngines\AndroidPlayer\EditorExtensions\UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{7D098825-1966-41E2-1E5C-EC88DC0E6F43}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

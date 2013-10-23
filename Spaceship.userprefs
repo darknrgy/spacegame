@@ -1,12 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Hologram Map\HolographicMapTransform.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Holographic Map\MapChildrenList.cs">
     <Files>
-      <File FileName="Assets\Spacecraft\CarDriver.cs" Line="1" Column="1" />
+      <File FileName="Assets\Spacecraft\CarDriver.cs" Line="20" Column="34" />
       <File FileName="Assets\Spacecraft\Aligner.cs" Line="1" Column="1" />
       <File FileName="Assets\Utility\DebugOutput.cs" Line="1" Column="1" />
-      <File FileName="Assets\Hologram Map\HolographicMapTransform.cs" Line="16" Column="3" />
-      <File FileName="Assets\MapChildren.cs" Line="10" Column="3" />
+      <File FileName="Assets\ProceduralTerrain\ProceduralTerrain.cs" Line="150" Column="32" />
+      <File FileName="Assets\Holographic Map\HolographicMapTransform.cs" Line="18" Column="1" />
+      <File FileName="Assets\Spacecraft\InitialBehavior.cs" Line="13" Column="19" />
+      <File FileName="Assets\Holographic Map\MapChildren.cs" Line="14" Column="3" />
+      <File FileName="Assets\Holographic Map\MapChildrenList.cs" Line="23" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
