@@ -19,6 +19,7 @@ SubShader {
 		
 	// Non-lightmapped
 	Pass {
+		Cull Off
 		Tags { "LightMode" = "Vertex" }
 		Material {
 			Diffuse [_Color]
