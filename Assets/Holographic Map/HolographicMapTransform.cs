@@ -18,13 +18,8 @@ public class HolographicMapTransform : MonoBehaviour {
 	protected static HolographicMapTransform instance;
 	
 	
-	// Use this for initialization
 	void Start () {
-		
-		//Transform[] children;
-		//children = actors.GetComponents<Transform>();
-		//children = actors.transform;
-		//Debug.Log("count of children is: " + children.Length);
+
 		Dictionary<string,GameObject> dict;
 		GameObject child;
 		foreach(Transform actor in actors.transform){
@@ -49,11 +44,12 @@ public class HolographicMapTransform : MonoBehaviour {
 			0 ,
 			0);
 		
-		parent.transform.Rotate(-47.0f,0,0);
+		//parent.transform.Rotate(-47.0f,0,0);
+		parent.transform.Rotate(-90.0f,0,0);
 		
 		
 		foreach (Dictionary<string,GameObject> child in localChildren){
-			child["child"].transform.localPosition = child["parent"].transform.position * 0.001f;
+			child["child"].transform.localPosition = child["parent"].transform.position * 0.00085f;
 			child["child"].transform.localRotation = child["parent"].transform.rotation;
 			child["child"].transform.parent = transform;
 			
