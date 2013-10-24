@@ -9,16 +9,33 @@ public class HolographicMapTransform : MonoBehaviour {
 	public DebugOutput debug;
 	public GameObject satellite;
 	public GameObject shipTemplate;
+	public GameObject actors;
 	
 	protected float counter = 0;
 	protected List<GameObject> children = new List<GameObject>();
+	protected List<Dictionary<string,GameObject>> localChildren = new List<Dictionary<string,GameObject>>();
 	
 	protected static HolographicMapTransform instance;
 	
 	
 	// Use this for initialization
 	void Start () {
-	
+		
+		//Transform[] children;
+		//children = actors.GetComponents<Transform>();
+		//children = actors.transform;
+		//Debug.Log("count of children is: " + children.Length);
+		Dictionary<string,GameObject> dict;
+		GameObject child;
+		foreach(Transform actor in actors.transform){
+			dict = new Dictionary<string, GameObject>();
+			child = (GameObject) Instantiate(shipTemplate, actor.position * 0.001f, actor.rotation);
+			child.transform.parent = transform;
+			dict.Add("parent", actor.gameObject);
+			dict.Add("child", child);
+			localChildren.Add(dict);
+			Debug.Log("adding child...");
+		}
 	}
 	
 	// Update is called once per frame
@@ -34,11 +51,15 @@ public class HolographicMapTransform : MonoBehaviour {
 		
 		parent.transform.Rotate(-47.0f,0,0);
 		
-		foreach (GameObject child in children){
-			child.transform.localPosition = satellite.transform.position * 0.001f;
-			child.transform.localEulerAngles = satellite.transform.eulerAngles;
-		}
 		
+		foreach (Dictionary<string,GameObject> child in localChildren){
+			child["child"].transform.localPosition = child["parent"].transform.position * 0.001f;
+			child["child"].transform.localRotation = child["parent"].transform.rotation;
+			child["child"].transform.parent = transform;
+			
+			debug.queue(child["child"].transform.position.ToString());
+		}
+				
 		
 		
 		
