@@ -11,6 +11,7 @@ public class HolographicMapTransform : MonoBehaviour {
 	public GameObject satellite;
 	public GameObject shipTemplate;
 	public GameObject actors;
+	public GameObject selfActor;
 	
 	protected float counter = 0;
 	protected List<GameObject> children = new List<GameObject>();
@@ -22,6 +23,7 @@ public class HolographicMapTransform : MonoBehaviour {
 	
 	protected const UInt16 TRAIL_LENGTH = 100;
 	protected const UInt16 TRAIL_INTERVAL = 20;
+	protected const float ACTOR_POSITION_SCALE = 0.001f;
 	
 	
 	
@@ -29,11 +31,15 @@ public class HolographicMapTransform : MonoBehaviour {
 
 		Dictionary<string,object> dict;
 		GameObject child;
+		GameObject trail;
+		Vector3[] trailPositions;
+		
+		// add NPC actors
 		foreach(Transform actor in actors.transform){
-			GameObject trail = GetTrailObject();
-			Vector3[] trailPositions = new Vector3[TRAIL_LENGTH];
+			trail = GetTrailObject();
+			trailPositions = new Vector3[TRAIL_LENGTH];
 			dict = new Dictionary<string, object>();
-			child = (GameObject) Instantiate(shipTemplate, actor.position * 0.001f, actor.rotation);
+			child = (GameObject) Instantiate(shipTemplate, actor.position * ACTOR_POSITION_SCALE, actor.rotation);
 			InitializeTrail(trailPositions, child.transform.position);
 			child.transform.parent = transform;
 			trail.transform.parent = transform;
@@ -43,12 +49,28 @@ public class HolographicMapTransform : MonoBehaviour {
 			dict.Add("trail_positions", trailPositions);
 			localChildren.Add(dict);
 		}
+		
+		// add self
+		trail = GetTrailObject();
+		trailPositions = new Vector3[TRAIL_LENGTH];
+		dict = new Dictionary<string, object>();
+		child = (GameObject) Instantiate(shipTemplate, selfActor.transform.position * ACTOR_POSITION_SCALE, selfActor.transform.rotation);
+		InitializeTrail(trailPositions, child.transform.position);
+		child.transform.parent = transform;
+		trail.transform.parent = transform;
+		dict.Add("parent", selfActor);
+		dict.Add("child", child);
+		dict.Add("trail", trail);
+		dict.Add("trail_positions", trailPositions);
+		localChildren.Add(dict);
+		
 	}
 	
 	protected GameObject GetTrailObject(){
 		GameObject trail = new GameObject();		
 		LineRenderer lineRenderer = trail.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+		
         lineRenderer.SetColors(Color.yellow, Color.yellow);
         lineRenderer.SetWidth(0.002F, 0.002F);
         lineRenderer.SetVertexCount(TRAIL_LENGTH);
@@ -105,11 +127,14 @@ public class HolographicMapTransform : MonoBehaviour {
 			0 ,
 			0);
 		
+		
+		parent.transform.Rotate(-90.0f,0,0);
+		
 		foreach (Dictionary<string,object> child in localChildren){
 			GameObject childObject = (GameObject) child["child"];
 			GameObject parentObject = (GameObject) child["parent"];
 			Vector3[] trailPositions = (Vector3[]) child["trail_positions"];
-			childObject.transform.localPosition = parentObject.transform.position * 0.00085f;
+			childObject.transform.localPosition = parentObject.transform.position * ACTOR_POSITION_SCALE;
 			childObject.transform.localRotation = parentObject.transform.rotation;
 			
 			if (trailCounter == 0){
@@ -118,6 +143,8 @@ public class HolographicMapTransform : MonoBehaviour {
 				Trail(trail, childObject.transform.localPosition, ref trailPositions);
 			}
 		}
+		
+		
 				
 		
 		
