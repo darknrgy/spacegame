@@ -82,7 +82,6 @@ public class ProceduralTerrain : MonoBehaviour {
 		
 		mesh.Clear();
 		mesh.vertices = newVertices;
-		Int32 count = Enumerable.Range(0, newCount).ToArray().Length;
 		Debug.Log("count of triangles" + newCount + "real count is " + newVertices.Length);
 		mesh.triangles = Enumerable.Range(0, newCount).ToArray();
 		mesh.uv = newUVs;

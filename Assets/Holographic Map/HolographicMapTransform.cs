@@ -12,6 +12,7 @@ public class HolographicMapTransform : MonoBehaviour {
 	public GameObject shipTemplate;
 	public GameObject actors;
 	public GameObject selfActor;
+	public Material trailShader;
 	
 	protected float counter = 0;
 	protected List<GameObject> children = new List<GameObject>();
@@ -36,7 +37,7 @@ public class HolographicMapTransform : MonoBehaviour {
 		
 		// add NPC actors
 		foreach(Transform actor in actors.transform){
-			trail = GetTrailObject();
+			trail = GetTrailObject(Color.red);
 			trailPositions = new Vector3[TRAIL_LENGTH];
 			dict = new Dictionary<string, object>();
 			child = (GameObject) Instantiate(shipTemplate, actor.position * ACTOR_POSITION_SCALE, actor.rotation);
@@ -51,7 +52,7 @@ public class HolographicMapTransform : MonoBehaviour {
 		}
 		
 		// add self
-		trail = GetTrailObject();
+		trail = GetTrailObject(Color.green);
 		trailPositions = new Vector3[TRAIL_LENGTH];
 		dict = new Dictionary<string, object>();
 		child = (GameObject) Instantiate(shipTemplate, selfActor.transform.position * ACTOR_POSITION_SCALE, selfActor.transform.rotation);
@@ -66,13 +67,13 @@ public class HolographicMapTransform : MonoBehaviour {
 		
 	}
 	
-	protected GameObject GetTrailObject(){
+	protected GameObject GetTrailObject(Color color){
 		GameObject trail = new GameObject();		
 		LineRenderer lineRenderer = trail.AddComponent<LineRenderer>();
-        lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+        lineRenderer.material = new Material(Shader.Find("Transparent/VertexLit"));
+		lineRenderer.material.CopyPropertiesFromMaterial(trailShader);
 		
-        lineRenderer.SetColors(Color.yellow, Color.yellow);
-        lineRenderer.SetWidth(0.002F, 0.002F);
+		lineRenderer.SetWidth(0.002F, 0.002F);
         lineRenderer.SetVertexCount(TRAIL_LENGTH);
 		lineRenderer.useWorldSpace = false;
 		lineRenderer.transform.parent = trail.transform;
