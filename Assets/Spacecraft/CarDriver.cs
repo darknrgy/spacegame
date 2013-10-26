@@ -25,6 +25,9 @@ public class CarDriver : MonoBehaviour {
 	public GameObject soundReverse;
 	public GameObject soundHover;
 	
+	public GameObject soundAnnounceHover;
+	public GameObject soundAnnounceOrbit;
+	
 	
 	
 	
@@ -62,6 +65,9 @@ public class CarDriver : MonoBehaviour {
 		
 		if (Input.GetKeyUp(KeyCode.E)){
 			hoverMode = !hoverMode;
+			if (hoverMode) GetSound(soundAnnounceHover).Play();
+			else GetSound(soundAnnounceOrbit).Play();
+			
 		}
 		
 		if (Input.GetKeyUp(KeyCode.F)){

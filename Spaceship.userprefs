@@ -1,11 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Holographic Map\HolographicMapTransform.cs">
-    <Files>
-      <File FileName="Assets\Holographic Map\HolographicMapTransform.cs" Line="72" Column="57" />
-      <File FileName="Assets\Spacecraft\CarDriver.cs" Line="62" Column="4" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
