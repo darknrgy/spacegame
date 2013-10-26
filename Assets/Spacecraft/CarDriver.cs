@@ -17,6 +17,16 @@ public class CarDriver : MonoBehaviour {
 	public TextMesh hoverHUD;
 	public GameObject mapToggle;
 	
+	public GameObject soundUp;
+	public GameObject soundDown;
+	public GameObject soundLeft;
+	public GameObject soundRight;
+	public GameObject soundForward;
+	public GameObject soundReverse;
+	public GameObject soundHover;
+	
+	
+	
 	
 	public GameObject cockpitModule;
 	
@@ -87,17 +97,25 @@ public class CarDriver : MonoBehaviour {
 			-xMouseAccumulator, 
 			0);
 		
+		
+		
 		// forward and reverse
 		bool zInput = false;
 		if (Input.GetKey(KeyCode.Space)){
 			zAcceleration += thrustAcceleration;
 			if (zAcceleration > thrustPower) zAcceleration = thrustPower;
+			GetSound(soundForward).mute = false;
 			zInput = true;
+		}else{
+			GetSound(soundForward).mute = true;
 		}
 		if (Input.GetKey(KeyCode.LeftAlt)){
 			zAcceleration -= thrustAcceleration;
 			if (zAcceleration < -thrustPower) zAcceleration = -thrustPower;
+			GetSound(soundReverse).mute = false;
 			zInput = true;
+		}else{
+			GetSound(soundReverse).mute = true;	
 		}
 		if (!zInput){
 			if (Math.Abs(zAcceleration) < thrustAcceleration) zAcceleration = 0;
@@ -110,12 +128,19 @@ public class CarDriver : MonoBehaviour {
 		if (Input.GetKey(KeyCode.D)){
 			xAcceleration += thrustAcceleration;
 			if (xAcceleration >  thrustPower) xAcceleration = thrustPower;
+			GetSound(soundRight).mute = false;
 			xInput = true;
+		}else{
+			GetSound(soundRight).mute = true;
 		}
+		
 		if (Input.GetKey(KeyCode.A)){
 			xAcceleration -= thrustAcceleration;
 			if (xAcceleration <  -thrustPower) xAcceleration = -thrustPower;
+			GetSound(soundLeft).mute = false;
 			xInput = true;
+		}else{
+			GetSound(soundLeft).mute = true;	
 		}
 		if (!xInput){
 			if (Math.Abs(xAcceleration) < thrustAcceleration) xAcceleration = 0;
@@ -131,12 +156,19 @@ public class CarDriver : MonoBehaviour {
 		if (Input.GetKey(KeyCode.W)){
 			yAcceleration += thrustAcceleration;
 			if (yAcceleration >  thrustPower) yAcceleration = thrustPower;
+			GetSound(soundUp).mute = false;
 			yInput = true;
-		}
+		}else{
+			GetSound(soundUp).mute = true;
+		}	
+		
 		if (Input.GetKey(KeyCode.S)){
 			yAcceleration -= thrustAcceleration;
 			if (yAcceleration <  maxDownThrust) yAcceleration = maxDownThrust;
+			GetSound(soundDown).mute = false;
 			yInput = true;
+		}else{
+			GetSound(soundDown).mute = true;
 		}
 		
 		if (!yInput){
@@ -145,5 +177,11 @@ public class CarDriver : MonoBehaviour {
 		}
 		rigidbody.AddRelativeForce(0, yAcceleration, 0);
 		
+		GetSound(soundHover).mute = !hoverMode;
+		
+	}
+	
+	protected AudioSource GetSound(GameObject myGameObject){
+		return myGameObject.GetComponent<AudioSource>();		
 	}
 }
