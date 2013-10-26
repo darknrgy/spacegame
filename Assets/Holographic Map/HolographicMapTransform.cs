@@ -10,9 +10,11 @@ public class HolographicMapTransform : MonoBehaviour {
 	public DebugOutput debug;
 	public GameObject satellite;
 	public GameObject shipTemplate;
+	public GameObject myShipTemplate;
 	public GameObject actors;
 	public GameObject selfActor;
-	public Material trailShader;
+	public Material trailMaterial;
+	public Material myTrailMaterial;
 	
 	protected float counter = 0;
 	protected List<GameObject> children = new List<GameObject>();
@@ -23,7 +25,7 @@ public class HolographicMapTransform : MonoBehaviour {
 	protected Int32 trailPositionCounter = 0;
 	
 	protected const UInt16 TRAIL_LENGTH = 100;
-	protected const UInt16 TRAIL_INTERVAL = 20;
+	protected const UInt16 TRAIL_INTERVAL = 10;
 	protected const float ACTOR_POSITION_SCALE = 0.001f;
 	
 	
@@ -37,7 +39,7 @@ public class HolographicMapTransform : MonoBehaviour {
 		
 		// add NPC actors
 		foreach(Transform actor in actors.transform){
-			trail = GetTrailObject(Color.red);
+			trail = GetTrailObject(trailMaterial);
 			trailPositions = new Vector3[TRAIL_LENGTH];
 			dict = new Dictionary<string, object>();
 			child = (GameObject) Instantiate(shipTemplate, actor.position * ACTOR_POSITION_SCALE, actor.rotation);
@@ -52,10 +54,10 @@ public class HolographicMapTransform : MonoBehaviour {
 		}
 		
 		// add self
-		trail = GetTrailObject(Color.green);
+		trail = GetTrailObject(myTrailMaterial);
 		trailPositions = new Vector3[TRAIL_LENGTH];
 		dict = new Dictionary<string, object>();
-		child = (GameObject) Instantiate(shipTemplate, selfActor.transform.position * ACTOR_POSITION_SCALE, selfActor.transform.rotation);
+		child = (GameObject) Instantiate(myShipTemplate, selfActor.transform.position * ACTOR_POSITION_SCALE, selfActor.transform.rotation);
 		InitializeTrail(trailPositions, child.transform.position);
 		child.transform.parent = transform;
 		trail.transform.parent = transform;
@@ -67,13 +69,13 @@ public class HolographicMapTransform : MonoBehaviour {
 		
 	}
 	
-	protected GameObject GetTrailObject(Color color){
+	protected GameObject GetTrailObject(Material myMaterial){
 		GameObject trail = new GameObject();		
 		LineRenderer lineRenderer = trail.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Transparent/VertexLit"));
-		lineRenderer.material.CopyPropertiesFromMaterial(trailShader);
+		lineRenderer.material.CopyPropertiesFromMaterial(myMaterial);
 		
-		lineRenderer.SetWidth(0.002F, 0.002F);
+		lineRenderer.SetWidth(0.0001F, 0.005F);
         lineRenderer.SetVertexCount(TRAIL_LENGTH);
 		lineRenderer.useWorldSpace = false;
 		lineRenderer.transform.parent = trail.transform;
@@ -138,10 +140,14 @@ public class HolographicMapTransform : MonoBehaviour {
 			childObject.transform.localPosition = parentObject.transform.position * ACTOR_POSITION_SCALE;
 			childObject.transform.localRotation = parentObject.transform.rotation;
 			
+			GameObject trail = (GameObject) child["trail"];
 			if (trailCounter == 0){
-				GameObject trail = (GameObject) child["trail"];
 				trail.transform.localPosition = new Vector3(0,0,0);
 				Trail(trail, childObject.transform.localPosition, ref trailPositions);
+			}else{
+				LineRenderer line = GetLineFromObject(trail);
+				line.SetPosition(TRAIL_LENGTH-1, childObject.transform.localPosition);
+				
 			}
 		}
 		
