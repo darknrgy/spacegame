@@ -15,6 +15,7 @@ public class CarDriver : MonoBehaviour {
 	public TextMesh verticalVelocityHUD;
 	public TextMesh altitudeHUD;
 	public TextMesh hoverHUD;
+	public GameObject mapToggle;
 	
 	
 	public GameObject cockpitModule;
@@ -49,8 +50,15 @@ public class CarDriver : MonoBehaviour {
 		
 		mainCamera.transform.Rotate(-Input.GetAxis("Mouse Y") * mouseSensivityX, 0,  0);
 		
-		if (Input.GetKeyUp(KeyCode.R)){
+		if (Input.GetKeyUp(KeyCode.E)){
 			hoverMode = !hoverMode;
+		}
+		
+		if (Input.GetKeyUp(KeyCode.F)){
+			Renderer[] renderers = mapToggle.GetComponentsInChildren<Renderer>();
+			foreach (Renderer childRenderer in renderers){
+				childRenderer.enabled = !childRenderer.enabled;
+			}			
 		}
 		
 		velocityHUD.text = "VEL: " + (rigidbody.velocity.magnitude * 2).ToString("F0") + "m/s";
