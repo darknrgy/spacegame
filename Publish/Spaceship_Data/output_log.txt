@@ -14,19 +14,9 @@ Loading C:\Users\darknrgy\Documents\Unity\Spaceship\Publish\Spaceship_Data\Manag
 Platform assembly: C:\Users\darknrgy\Documents\Unity\Spaceship\Publish\Spaceship_Data\Managed\XInputDotNetPure.dll (this message is harmless)
 Loading C:\Users\darknrgy\Documents\Unity\Spaceship\Publish\Spaceship_Data\Managed\XInputDotNetPure.dll into Unity Child Domain
 - Completed reload, in  0.035 seconds
-desktop: 1680x1050 60Hz; virtual: 3360x1050 at 0,0
+desktop: 1680x1050 60Hz; virtual: 1680x1050 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
-Skipped rendering frame because GfxDevice is in invalid state (device lost)
- 
-(Filename:  Line: 1494)
-
-HandleD3DDeviceLost
-  HandleD3DDeviceLost: needs reset, doing it
-FullResetD3DDevice
-ResetD3DDevice
-dev->Reset
-D3Dwindow device not lost anymore
 Skipped rendering frame because GfxDevice is in invalid state (device lost)
  
 (Filename:  Line: 1494)
