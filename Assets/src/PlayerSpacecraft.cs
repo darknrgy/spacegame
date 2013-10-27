@@ -37,8 +37,8 @@ public class PlayerSpacecraft : Body {
 	protected float lastVPosition = 0;
 	protected float vVelocity = 0;
 	
-	void Start () {
-		Initialize ();
+	new void Start () {
+		base.Start();
 		if (hoverMode) ApplyForce(Y_AXIS, GravityForce(), true);
 	}
 	
@@ -56,7 +56,7 @@ public class PlayerSpacecraft : Body {
 			0, -xMouseAccumulator, 0);		
 	}
 	
-	void FixedUpdate(){
+	new void FixedUpdate(){
 		
 		float gravityForce = ApplyGravity();
 		CalculateVerticalVelocity();

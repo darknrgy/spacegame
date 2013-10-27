@@ -46,7 +46,6 @@
   <ItemGroup>
      <Compile Include="Assets\src\Aligner.cs" />
      <Compile Include="Assets\src\Body.cs" />
-     <Compile Include="Assets\src\CarDriver.cs" />
      <Compile Include="Assets\src\Controller.cs" />
      <Compile Include="Assets\src\DebugOutput.cs" />
      <Compile Include="Assets\src\HolographicMapTransform.cs" />

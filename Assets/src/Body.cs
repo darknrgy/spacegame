@@ -9,7 +9,7 @@ public class Body : MonoBehaviour {
 	public GameObject aligner;
 	protected Dictionary<int, float> thrust = new Dictionary<int, float>();
 	public float thrustAcceleration = 0.1f;
-	protected const float GRAVITATIONAL_CONSTANT = 1;
+	protected const float GRAVITATIONAL_CONSTANT = 1100;
 	protected float planetMass;
 	
 	protected static int X_AXIS = 1;
@@ -26,12 +26,16 @@ public class Body : MonoBehaviour {
 		thrust[X_AXIS] = 0;
 		thrust[Y_AXIS] = 0;
 		thrust[Z_AXIS] = 0;		
-		planetMass = 1100 / GRAVITATIONAL_CONSTANT;		
 	}
 	
-	protected void Initialize() {
+	public void Start() {
 		rigidbody.centerOfMass = new Vector3(0, 0, 0);
 	}
+	
+	public void FixedUpdate(){
+		ApplyGravity();
+	}
+	
 	
 	protected void ApplyForce(int axis, float v){
 		ApplyForce(axis, v, false);
@@ -50,7 +54,7 @@ public class Body : MonoBehaviour {
 	}
 	
 	protected float GravityForce(){
-		return GRAVITATIONAL_CONSTANT * planetMass * rigidbody.mass / transform.position.magnitude;
+		return GRAVITATIONAL_CONSTANT * rigidbody.mass / transform.position.magnitude;
 	}
 	
 	private float GoTowards(float previous, float next, float rate){
