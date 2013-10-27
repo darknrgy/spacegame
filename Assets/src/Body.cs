@@ -7,11 +7,12 @@ public class Body : MonoBehaviour {
 	
 	public DebugOutput debugOutput;
 	public GameObject aligner;
-	protected Dictionary<int, float> thrust = new Dictionary<int, float>();
 	public float thrustAcceleration = 0.1f;
+	public Vector3 initialVelocity = new Vector3(0,0,0);
+	
+	protected Dictionary<int, float> thrust = new Dictionary<int, float>();
 	protected const float GRAVITATIONAL_CONSTANT = 1100;
 	protected float planetMass;
-	
 	protected static int X_AXIS = 1;
 	protected static int Y_AXIS = 2;
 	protected static int Z_AXIS = 3;
@@ -30,6 +31,7 @@ public class Body : MonoBehaviour {
 	
 	public void Start() {
 		rigidbody.centerOfMass = new Vector3(0, 0, 0);
+		rigidbody.velocity = initialVelocity;
 	}
 	
 	public void FixedUpdate(){
