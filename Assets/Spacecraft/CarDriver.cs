@@ -5,9 +5,10 @@ using System;
 public class CarDriver : MonoBehaviour {
 	
 	public DebugOutput debugOutput;
+	public GameObject aligner;
 	public float thrustPower = 100.0f;
 	public float thrustAcceleration = 0.1f;
-	public float maxDownThrustHover = 3.0f;
+	public float hoverVerticalThrustDelta = 2.0f;
 	public float hoverThrust = 5.0f;
 	public float mouseSensivityX = 1.0f;
 	public float mouseSensivityY = 1.0f;
@@ -28,6 +29,9 @@ public class CarDriver : MonoBehaviour {
 	public GameObject soundAnnounceHover;
 	public GameObject soundAnnounceOrbit;
 	
+	protected const float GRAVITATIONAL_CONSTANT = 1;
+	protected float planetMass;
+	
 	
 	
 	
@@ -46,8 +50,9 @@ public class CarDriver : MonoBehaviour {
 	protected float vVelocity = 0;
 	
 	void Start () {
-		if (hoverMode) yAcceleration = hoverThrust;
+		if (hoverMode) yAcceleration = GravityForce();
 		rigidbody.centerOfMass = new Vector3(0, 0, 0);
+		planetMass = 1100 / GRAVITATIONAL_CONSTANT;
 	}
 	
 	// Update is called once per frame
@@ -83,6 +88,10 @@ public class CarDriver : MonoBehaviour {
 		hoverHUD.text = hoverMode ? "HOVER" : "ORBIT";
 		hoverHUD.color = hoverMode ? new Color(0, 1.0f, 0, 1.0f) :  new Color(1.0f, 0, 0, 1.0f);
 		
+		float gravityForce = GRAVITATIONAL_CONSTANT * planetMass / transform.position.magnitude;
+		debugOutput.queue("planet mass  : " + planetMass);
+		debugOutput.queue("gravity force: " + gravityForce);
+		
 		
 		
 		
@@ -94,12 +103,17 @@ public class CarDriver : MonoBehaviour {
 		vVelocity = (vPosition - lastVPosition) * (1/ Time.deltaTime);
 		lastVPosition = vPosition;
 		
+		float gravityForce = GravityForce();
+		
+		Vector3 gravity = (new Vector3(0,0,0) - aligner.rigidbody.position.normalized) * gravityForce;
+		aligner.rigidbody.AddForce(gravity);
+		
+		
 		
 		cockpitModule.transform.localEulerAngles = new Vector3(
 			0, 
 			-xMouseAccumulator, 
 			0);
-		
 		
 		
 		// forward and reverse
@@ -154,11 +168,14 @@ public class CarDriver : MonoBehaviour {
 		
 		// up and down
 		bool yInput = false;
-		float maxDownThrust = hoverMode ? maxDownThrustHover : -thrustPower;
-		float yThrustCenter = hoverMode ? hoverThrust : 0;
+		float maxDownThrust = hoverMode ? (gravityForce - hoverVerticalThrustDelta) : -thrustPower;
+		float maxUpThrust = hoverMode ? (gravityForce + hoverVerticalThrustDelta) : thrustPower;
+		if (maxUpThrust > thrustPower) maxUpThrust = thrustPower;
+		
+		float yThrustCenter = hoverMode ? gravityForce : 0;
 		if (Input.GetKey(KeyCode.W)){
 			yAcceleration += thrustAcceleration;
-			if (yAcceleration >  thrustPower) yAcceleration = thrustPower;
+			if (yAcceleration >  maxUpThrust) yAcceleration = maxUpThrust;
 			GetSound(soundUp).mute = false;
 			yInput = true;
 		}else{
@@ -178,10 +195,15 @@ public class CarDriver : MonoBehaviour {
 			if (Math.Abs(yAcceleration - yThrustCenter) < thrustAcceleration) yAcceleration = yThrustCenter;
 			else yAcceleration += (yAcceleration < yThrustCenter) ? thrustAcceleration : -thrustAcceleration;
 		}
+
 		rigidbody.AddRelativeForce(0, yAcceleration, 0);
 		
 		GetSound(soundHover).mute = !hoverMode;
 		
+	}
+	
+	protected float GravityForce(){
+		return GRAVITATIONAL_CONSTANT * planetMass * rigidbody.mass / transform.position.magnitude;
 	}
 	
 	protected AudioSource GetSound(GameObject myGameObject){

@@ -6,7 +6,7 @@ public class Controller : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//Screen.showCursor = false;
-		Screen.lockCursor = true;
+		//Screen.lockCursor = true;
 	}
 	
 	// Update is called once per frame
