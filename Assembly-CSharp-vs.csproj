@@ -44,16 +44,19 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Controller.cs" />
-     <Compile Include="Assets\Holographic Map\HolographicMapTransform.cs" />
-     <Compile Include="Assets\Holographic Map\MapChild.cs" />
-     <Compile Include="Assets\Holographic Map\MapChildrenList.cs" />
-     <Compile Include="Assets\ProceduralTerrain\PointsOnSphere.cs" />
-     <Compile Include="Assets\ProceduralTerrain\ProceduralTerrain.cs" />
-     <Compile Include="Assets\Spacecraft\Aligner.cs" />
-     <Compile Include="Assets\Spacecraft\CarDriver.cs" />
-     <Compile Include="Assets\Spacecraft\InitialBehavior.cs" />
-     <Compile Include="Assets\Utility\DebugOutput.cs" />
+     <Compile Include="Assets\src\Aligner.cs" />
+     <Compile Include="Assets\src\Body.cs" />
+     <Compile Include="Assets\src\CarDriver.cs" />
+     <Compile Include="Assets\src\Controller.cs" />
+     <Compile Include="Assets\src\DebugOutput.cs" />
+     <Compile Include="Assets\src\HolographicMapTransform.cs" />
+     <Compile Include="Assets\src\InitialBehavior.cs" />
+     <Compile Include="Assets\src\MapChild.cs" />
+     <Compile Include="Assets\src\MapChildrenList.cs" />
+     <Compile Include="Assets\src\PlayerSpacecraft.cs" />
+     <Compile Include="Assets\src\PointsOnSphere.cs" />
+     <Compile Include="Assets\src\Prefs.cs" />
+     <Compile Include="Assets\src\ProceduralTerrain.cs" />
      <None Include="Assets\Holographic Map\Hologoram.shader" />
      <None Include="Assets\Plugins\MITLicense_XInputDotNetPureDLL.txt" />
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />

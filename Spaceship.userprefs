@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\src\Prefs.cs">
+    <Files>
+      <File FileName="Assets\src\Body.cs" Line="31" Column="3" />
+      <File FileName="Assets\src\PlayerSpacecraft.cs" Line="50" Column="3" />
+      <File FileName="Assets\src\CarDriver.cs" Line="51" Column="9" />
+      <File FileName="Assets\src\Prefs.cs" Line="20" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -9,7 +9,6 @@ public class CarDriver : MonoBehaviour {
 	public float thrustPower = 100.0f;
 	public float thrustAcceleration = 0.1f;
 	public float hoverVerticalThrustDelta = 2.0f;
-	public float hoverThrust = 5.0f;
 	public float mouseSensivityX = 1.0f;
 	public float mouseSensivityY = 1.0f;
 	public TextMesh velocityHUD;
@@ -44,15 +43,16 @@ public class CarDriver : MonoBehaviour {
 	protected float xAcceleration = 0;
 	protected float yAcceleration = 0;
 	protected float zAcceleration = 0;
-	protected float cockpitRotation;
+	
 	protected float xMouseAccumulator = 0;
 	protected float lastVPosition = 0;
 	protected float vVelocity = 0;
 	
-	void Start () {
-		if (hoverMode) yAcceleration = GravityForce();
-		rigidbody.centerOfMass = new Vector3(0, 0, 0);
+	public void Start () {
 		planetMass = 1100 / GRAVITATIONAL_CONSTANT;
+		rigidbody.centerOfMass = new Vector3(0, 0, 0);
+		if (hoverMode) yAcceleration = GravityForce();
+		
 	}
 	
 	// Update is called once per frame
