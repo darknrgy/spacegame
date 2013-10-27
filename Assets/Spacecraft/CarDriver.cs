@@ -94,9 +94,6 @@ public class CarDriver : MonoBehaviour {
 		vVelocity = (vPosition - lastVPosition) * (1/ Time.deltaTime);
 		lastVPosition = vPosition;
 		
-
-		
-		
 		
 		cockpitModule.transform.localEulerAngles = new Vector3(
 			0, 

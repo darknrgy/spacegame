@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Controller.cs" />
      <Compile Include="Assets\Holographic Map\HolographicMapTransform.cs" />
      <Compile Include="Assets\Holographic Map\MapChild.cs" />
      <Compile Include="Assets\Holographic Map\MapChildrenList.cs" />
