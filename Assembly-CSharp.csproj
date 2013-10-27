@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Lander.cs" />
      <Compile Include="Assets\src\Body.cs" />
      <Compile Include="Assets\src\Controller.cs" />
      <Compile Include="Assets\src\DebugOutput.cs" />

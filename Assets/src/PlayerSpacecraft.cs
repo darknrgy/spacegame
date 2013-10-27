@@ -13,7 +13,10 @@ public class PlayerSpacecraft : Body {
 	public TextMesh altitudeHUD;
 	public TextMesh hoverHUD;
 	public GameObject mapToggle;
-	
+	public bool hoverMode = false;
+	public GameObject cockpitModule;
+	public Component mainCamera;
+	public bool landed = false;
 	public GameObject soundUp;
 	public GameObject soundDown;
 	public GameObject soundLeft;
@@ -24,18 +27,11 @@ public class PlayerSpacecraft : Body {
 	public GameObject soundAnnounceHover;
 	public GameObject soundAnnounceOrbit;
 	
-	public GameObject cockpitModule;
-	
-	public Component mainCamera;
-	
-	protected bool hoverMode = true;
-	protected float xAcceleration = 0;
-	protected float yAcceleration = 0;
-	protected float zAcceleration = 0;
-	
 	protected float xMouseAccumulator = 0;
 	protected float lastVPosition = 0;
 	protected float vVelocity = 0;
+	
+	protected static float LANDING_FORCE = 0.5f;
 	
 	new void Start () {
 		base.Start();
@@ -116,15 +112,25 @@ public class PlayerSpacecraft : Body {
 			ApplyForce(Y_AXIS, center);
 			GetSound(soundUp).mute = true;
 			GetSound(soundDown).mute = true;
+			if (landed){ 
+				ApplyForce(Y_AXIS, - LANDING_FORCE, true);
+			}
 		}			
 		
 	}
 	
+	public void Land(){
+		landed = true;
+		if (hoverMode) ToggleHoverMode();
+	}
+	
 	void HandleMouseInput(){
+		mainCamera.transform.Rotate(-Input.GetAxis("Mouse Y") * (float) Prefs.get("mouseSensivityY"), 0,  0);		
+		if (landed) return;
 		xMouseAccumulator *= 0.85f;
 		xMouseAccumulator += Input.GetAxis("Mouse X") * (float) Prefs.get("mouseSensivityX");
-		transform.Rotate(0, Input.GetAxis("Mouse X") * (float) Prefs.get("mouseSensivityX"), 0);		
-		mainCamera.transform.Rotate(-Input.GetAxis("Mouse Y") * (float) Prefs.get("mouseSensivityY"), 0,  0);		
+		transform.Rotate(0, Input.GetAxis("Mouse X") * (float) Prefs.get("mouseSensivityX"), 0);	
+		
 	}
 	
 	void DrawHud(){
