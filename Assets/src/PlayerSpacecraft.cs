@@ -47,6 +47,7 @@ public class PlayerSpacecraft : Body {
 		if (Input.GetKeyUp(KeyCode.F)) ToggleMap();
 	}
 	
+	
 	void AlignMap(){
 		cockpitModule.transform.localEulerAngles = new Vector3(
 			0, -xMouseAccumulator, 0);		
@@ -54,11 +55,12 @@ public class PlayerSpacecraft : Body {
 	
 	new void FixedUpdate(){
 		
+		AlignMap();
+		
 		float gravityForce = ApplyGravity();
 		CalculateVerticalVelocity();
 		
-		
-		// Forward and Reverse
+				// Forward and Reverse
 		if (Input.GetKey(KeyCode.Space)){
 			ApplyForce(Z_AXIS, thrustPower);	
 			GetSound(soundForward).mute = false;

@@ -1,11 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\src\PlayerSpacecraft.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\src\Body.cs">
     <Files>
-      <File FileName="Assets\src\Body.cs" Line="34" Column="40" />
-      <File FileName="Assets\src\PlayerSpacecraft.cs" Line="123" Column="3" />
+      <File FileName="Assets\src\Body.cs" Line="49" Column="3" />
+      <File FileName="Assets\src\PlayerSpacecraft.cs" Line="130" Column="18" />
       <File FileName="Assets\src\Prefs.cs" Line="1" Column="1" />
-      <File FileName="Assets\Lander.cs" Line="9" Column="3" />
+      <File FileName="Assets\Lander.cs" Line="1" Column="1" />
+      <File FileName="Assets\src\HolographicMapTransform.cs" Line="15" Column="29" />
+      <File FileName="Assets\src\Controller.cs" Line="9" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

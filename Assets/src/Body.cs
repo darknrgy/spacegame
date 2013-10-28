@@ -9,13 +9,18 @@ public class Body : MonoBehaviour {
 	public GameObject aligner;
 	public float thrustAcceleration = 0.1f;
 	public Vector3 initialVelocity = new Vector3(0,0,0);
+	public bool stationKeeping = false;
 	
 	protected Dictionary<int, float> thrust = new Dictionary<int, float>();
+	protected float stationKeepingAlt;
 	protected const float GRAVITATIONAL_CONSTANT = 1100;
 	protected float planetMass;
 	protected static int X_AXIS = 1;
 	protected static int Y_AXIS = 2;
-	protected static int Z_AXIS = 3;
+	protected static int Z_AXIS = 3;	
+	
+	protected float stationKeepingThrust;
+	protected float currentAlt;
 	
 	protected Dictionary<int, Vector3> vectorMap = new Dictionary<int, Vector3>();
 	
@@ -32,10 +37,21 @@ public class Body : MonoBehaviour {
 	public void Start() {
 		rigidbody.centerOfMass = new Vector3(0, 0, 0);
 		rigidbody.velocity = initialVelocity;
+		currentAlt = stationKeepingAlt = transform.position.magnitude;
+	}
+	
+	void Update(){
+		debugOutput.queue("target  : " + stationKeepingAlt);
+		debugOutput.queue("altitude: " + transform.position.magnitude);
+		debugOutput.queue("thrust:   " + stationKeepingThrust);
+		debugOutput.queue("velocity: " + rigidbody.velocity.magnitude);
+		
+		
 	}
 	
 	public void FixedUpdate(){
 		ApplyGravity();
+		if (stationKeeping) StationKeeping();		
 	}
 	
 	
@@ -71,5 +87,48 @@ public class Body : MonoBehaviour {
 			if (previous < next) previous = next;
 		}
 		return previous;
+	}
+	protected float yRotation = 0;
+	
+	protected void StationKeeping2(){
+		
+		float newAlt = transform.position.magnitude;
+		float altDifference = stationKeepingAlt - newAlt;
+		
+		float thrust = 0.01f * rigidbody.mass;
+		
+		if (newAlt < currentAlt && newAlt < stationKeepingAlt){
+			ApplyForce(X_AXIS, thrust, true);
+			Debug.Log("Increasing...");
+		}
+		
+		if (newAlt > currentAlt && newAlt > stationKeepingAlt){
+			ApplyForce(X_AXIS, -thrust/2, true);			
+			Debug.Log("Decreasing...");
+		}
+		
+		currentAlt = newAlt;
+		
+	}
+	
+	
+	
+	protected void StationKeeping(){
+		
+		float newAlt = transform.position.magnitude;
+		float altDifference = stationKeepingAlt - newAlt;
+		
+		stationKeepingThrust = altDifference * 0.1f;
+		float actualThrust = stationKeepingThrust * rigidbody.mass;
+		
+		
+		ApplyForce(Y_AXIS, actualThrust, true);
+		if (newAlt < currentAlt && newAlt < stationKeepingAlt){
+			ApplyForce(X_AXIS, actualThrust, true);
+			Debug.Log("applying z force: " + -actualThrust);
+		}
+		
+		currentAlt = newAlt;
+		
 	}
 }
