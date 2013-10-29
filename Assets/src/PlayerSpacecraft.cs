@@ -94,7 +94,7 @@ public class PlayerSpacecraft : Body {
 		// Up and Down
 		float up, down, center = 0;
 		if (hoverMode){
-			up = gravityForce + hoverVerticalThrustDelta;
+			up = thrustPower;
 			down = gravityForce - hoverVerticalThrustDelta;
 			center = gravityForce;
 		}else{
