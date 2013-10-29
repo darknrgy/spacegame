@@ -44,12 +44,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Lander.cs" />
-     <Compile Include="Assets\YawAligner.cs" />
      <Compile Include="Assets\src\Body.cs" />
      <Compile Include="Assets\src\Controller.cs" />
      <Compile Include="Assets\src\DebugOutput.cs" />
      <Compile Include="Assets\src\HolographicMapTransform.cs" />
+     <Compile Include="Assets\src\Lander.cs" />
      <Compile Include="Assets\src\PlayerSpacecraft.cs" />
      <Compile Include="Assets\src\PointsOnSphere.cs" />
      <Compile Include="Assets\src\Prefs.cs" />

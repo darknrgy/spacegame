@@ -24,7 +24,7 @@ public class HolographicMapTransform : MonoBehaviour {
 	protected Int32 trailCounter = 0;
 	protected Int32 trailPositionCounter = 0;
 	
-	protected const UInt16 TRAIL_LENGTH = 100;
+	protected const UInt16 TRAIL_LENGTH = 30;
 	protected const UInt16 TRAIL_INTERVAL = 10;
 	protected const float ACTOR_POSITION_SCALE = 0.001f;
 	

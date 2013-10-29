@@ -126,6 +126,10 @@ public class PlayerSpacecraft : Body {
 		if (hoverMode) ToggleHoverMode();
 	}
 	
+	public void TakeOff(){
+		landed = false;
+	}
+	
 	void HandleMouseInput(){
 		mainCamera.transform.Rotate(-Input.GetAxis("Mouse Y") * (float) Prefs.get("mouseSensivityY"), 0,  0);		
 		if (landed) return;

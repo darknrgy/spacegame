@@ -10,7 +10,7 @@ public class Body : MonoBehaviour {
 	public float thrustAcceleration = 0.1f;
 	public Vector3 initialVelocity = new Vector3(0,0,0);
 	public bool stationKeeping = false;
-	
+		
 	protected Dictionary<int, float> thrust = new Dictionary<int, float>();
 	protected float stationKeepingAlt;
 	protected const float GRAVITATIONAL_CONSTANT = 1100;
@@ -19,6 +19,8 @@ public class Body : MonoBehaviour {
 	protected static int Y_AXIS = 2;
 	protected static int Z_AXIS = 3;	
 	
+	protected GameObject velocityVector;
+	protected GameObject forwardVector;
 	protected float stationKeepingThrust;
 	protected float currentAlt;
 	
@@ -38,15 +40,14 @@ public class Body : MonoBehaviour {
 		rigidbody.centerOfMass = new Vector3(0, 0, 0);
 		rigidbody.velocity = initialVelocity;
 		currentAlt = stationKeepingAlt = transform.position.magnitude;
-	}
-	
-	void Update(){
-		debugOutput.queue("target  : " + stationKeepingAlt);
-		debugOutput.queue("altitude: " + transform.position.magnitude);
-		debugOutput.queue("thrust:   " + stationKeepingThrust);
-		debugOutput.queue("velocity: " + rigidbody.velocity.magnitude);
-		
-		
+		if (stationKeeping){
+			velocityVector = new GameObject("Velocity Vector");
+			velocityVector.transform.parent = transform;
+			velocityVector.transform.position = transform.position;
+			forwardVector = new GameObject("Forward Vector");
+			forwardVector.transform.parent = transform;
+			forwardVector.transform.localPosition = initialVelocity.normalized;			
+		}
 	}
 	
 	public void FixedUpdate(){
@@ -88,47 +89,29 @@ public class Body : MonoBehaviour {
 		}
 		return previous;
 	}
+	
+	// Station Keeping
 	protected float yRotation = 0;
-	
-	protected void StationKeeping2(){
+	protected void StationKeeping(){	
 		
+		float yawAngle = AlignYaw();
+		if (yawAngle > 3) return;
 		float newAlt = transform.position.magnitude;
-		float altDifference = stationKeepingAlt - newAlt;
-		
-		float thrust = 0.01f * rigidbody.mass;
-		
-		if (newAlt < currentAlt && newAlt < stationKeepingAlt){
-			ApplyForce(X_AXIS, thrust, true);
-			Debug.Log("Increasing...");
-		}
-		
-		if (newAlt > currentAlt && newAlt > stationKeepingAlt){
-			ApplyForce(X_AXIS, -thrust/2, true);			
-			Debug.Log("Decreasing...");
-		}
-		
-		currentAlt = newAlt;
-		
-	}
-	
-	
-	
-	protected void StationKeeping(){
-		
-		float newAlt = transform.position.magnitude;
-		float altDifference = stationKeepingAlt - newAlt;
-		
-		stationKeepingThrust = altDifference * 0.1f;
+		float altDifference = stationKeepingAlt - newAlt;		
+		stationKeepingThrust = altDifference * 0.05f;
 		float actualThrust = stationKeepingThrust * rigidbody.mass;
-		
-		
 		ApplyForce(Y_AXIS, actualThrust, true);
 		if (newAlt < currentAlt && newAlt < stationKeepingAlt){
-			ApplyForce(X_AXIS, actualThrust, true);
-			Debug.Log("applying z force: " + -actualThrust);
-		}
-		
+			ApplyForce(X_AXIS, actualThrust, true);			
+		}		
 		currentAlt = newAlt;
-		
+	}
+	
+	protected float AlignYaw(){
+		velocityVector.transform.position = transform.position + rigidbody.velocity.normalized;		
+		float angle = Vector3.Angle(new Vector3(1,0,0), velocityVector.transform.localPosition);
+		float zDelta = velocityVector.transform.localPosition.z;
+		rigidbody.transform.Rotate(0, angle * 0.01f * (zDelta > 0 ? -1 : 1),0);	
+		return angle;
 	}
 }
