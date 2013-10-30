@@ -10,6 +10,7 @@ public class Body : MonoBehaviour {
 	public float thrustAcceleration = 0.1f;
 	public Vector3 initialVelocity = new Vector3(0,0,0);
 	public bool stationKeeping = false;
+	public bool showTelemetry = false;
 		
 	protected Dictionary<int, float> thrust = new Dictionary<int, float>();
 	protected float stationKeepingAlt;
@@ -50,9 +51,14 @@ public class Body : MonoBehaviour {
 		}
 	}
 	
+	void Update(){
+		if (showTelemetry) debugOutput.queue("ALT: " + transform.position.magnitude);
+	}
+		
+	
 	public void FixedUpdate(){
 		ApplyGravity();
-		if (stationKeeping) StationKeeping();		
+		if (stationKeeping) StationKeeping();
 	}
 	
 	
